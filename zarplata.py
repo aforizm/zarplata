@@ -27,10 +27,7 @@ def btn_clicked():
         vyvod['bg'] = '#F0F0F0'        
     else:
         vyvod['text'] = 'не корректно введена сумма'
-        vyvod['bg'] = 'red'
-
-    
-    
+        vyvod['bg'] = 'red'   
 
 
 #начальные установки окна
@@ -48,6 +45,7 @@ todayL = Label(root, text = todayTxt, font = 'arial 14')
 
 #дней до з/п
 today = date.today()
+
 #определяем в каком месяце будет з/п
 if today.day < 20:
     dateZp = date(today.year, today.month, 20)
@@ -55,12 +53,14 @@ elif today.month+1 == 13:
     dateZp = date(today.year+1, 1, 20)
 else:
     dateZp = date(today.year, today.month+1, 20)
+
 #определяем кол-во дней до з/п
 kolvo = dateZp - today
 if kolvo.days < 0:
     ddd = kolvo.days+30
 else:
     ddd = kolvo.days
+    
 #надпись
 dneydozp = 'Дней до з/п: '
 dneydozp = dneydozp + str(ddd)
