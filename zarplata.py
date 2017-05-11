@@ -25,7 +25,7 @@ class Application(Frame):
 		todayTxt = "Сегодня: " + d
 		Label(self,
 			  text = todayTxt,
-			  font=("Helvetica", 16)
+			  font=("Bookman Old Style", 16)
 			  ).grid(row = 0, column = 0, columnspan = 2, sticky = W)
 
 		#label  space
@@ -54,13 +54,13 @@ class Application(Frame):
 		dneydozp = dneydozp + str(self.ddd)
 		Label(self, 
 			  text = dneydozp, 
-			  font = 'Arial 14'
+			  font=("Bookman Old Style", 14)
 			  ).grid(row = 0, column = 2, sticky = W)
 
 		#label enter money and input
 		Label(self,
 			  text = 'Введите сумму денег: ',
-			  font = 'Arial 12'
+			  font=("Bookman Old Style", 12)
 			  ).grid(row = 2, column = 0, columnspan = 2, sticky = W)
 		self.money_ent = Entry(self, width = 8, bd = 4 )
 		self.money_ent.focus()
@@ -69,14 +69,14 @@ class Application(Frame):
 		#label расход в день
 		Label(self,
 			  text = 'Расход в день: ',
-			  font = 'Arial 12'
+			  font=("Bookman Old Style", 12)
 			  ).grid(row = 3, column = 0, columnspan = 2, sticky = W)
 		
 		self.rashod_lbl_str = StringVar()
 		self.rashod_lbl_str.set(" ")
 		self.rashod_lbl = Label(self,
 		      textvariable=self.rashod_lbl_str,		  
-			  font = 'Arial 12',
+			  font=("Bookman Old Style", 12),
 			  bg = "white"
 			  )
 		self.rashod_lbl.grid(row = 3, column = 1,  sticky = W)
@@ -89,7 +89,7 @@ class Application(Frame):
 			command = self.btn_clicked,
 			bg = '#293D72', 
 			fg = 'white', 
-			font = 'Arial 30',
+			font=("Bookman Old Style", 30),
 			).grid(row = 4, column = 1,  sticky = W)
 
 		#picture label
