@@ -13,7 +13,7 @@ class Application(Frame):
 	def __init__(self, master):
 		super(Application, self).__init__(master)
 		self.grid()
-		self.bind("<Return>", self.callback) #счет происходит при нажатии на клавишу Enter
+		#self.bind("<Return>", self.callback) #счет происходит при нажатии на клавишу Enter
 		self.AddWidgets()
 		
 
@@ -27,6 +27,12 @@ class Application(Frame):
 			  text = todayTxt,
 			  font=("Helvetica", 16)
 			  ).grid(row = 0, column = 0, columnspan = 2, sticky = W)
+
+		#label  space
+		Label(self,
+			  text = ' ',
+			  
+			  ).grid(row =1, column = 0, columnspan = 2, sticky = W)
 
 		#label дней до з/п
 		today = date.today()
@@ -66,10 +72,10 @@ class Application(Frame):
 			  font = 'Arial 12'
 			  ).grid(row = 3, column = 0, columnspan = 2, sticky = W)
 		
-		self.v = StringVar()
-		self.v.set(" ")
+		self.rashod_lbl_str = StringVar()
+		self.rashod_lbl_str.set(" ")
 		self.rashod_lbl = Label(self,
-		      textvariable=self.v,		  
+		      textvariable=self.rashod_lbl_str,		  
 			  font = 'Arial 12',
 			  bg = "white"
 			  )
@@ -101,79 +107,23 @@ class Application(Frame):
 		#проверка, введено ли целое число или текст
 		if entered.isdigit():
 			rashVDen = int(entered) / int(self.ddd)
-			print(rashVDen)
-			self.v.set(int(rashVDen))
+			self.rashod_lbl_str.set(int(rashVDen))
 			self.rashod_lbl['bg'] = '#F0F0F0'
 		else:
-			self.v.set('не корректно введена сумма')
+			self.rashod_lbl_str.set('не корректно введена сумма')
 			self.rashod_lbl['bg'] = "red"
 
-	def callback(event):
-		self.btn_clicked()
+	
 
 
-
+def callback(event):
+	Application.btn_clicked(app)
 
 
 root = Tk()
 root.title('Зарплата ver 0.9.2/110517')
 root.resizable(0,0)
 app = Application(root)
-
-
-
-
-
-"""def  btn_clicked():
-    entered = inputMoney.get()
-    
-
-    if entered.isdigit(): #проверка, введено ли целое число или текст
-        rashVDen = int(entered) / int(ddd)
-        vyvod['text'] = int(rashVDen)
-        vyvod['bg'] = '#F0F0F0'        
-    else:
-        vyvod['text'] = 'не корректно введена сумма'
-        vyvod['bg'] = 'red'   
-"""
-
-#начальные установки окна
-#root['width'] = WIDTH
-#root['height']= HEIGHT
-
-
-
-
-#дней до з/п
-
-
-#прочие надписи которые имеются в проге
-#enterMoney = Label(root, , )
-#rashodDay = Label(root, text = 'Примерный расход в день:', font = 'arial 12')
-
-#ввод денег и вывод на экран
-#inputMoney = Entry(root, width = 8, bd = 4)
-#inputMoney.focus()
-#btn = Button(root, text = 'Рассчитать', bg = '#293D72', fg = 'white', font = 'arial 30',
-#             command= btn_clicked)
-#vyvod = Label(root, font = 'arial 12')
-
-
-#отображение фото
-
-
-#упаковка виджетов
-"""
-todayL.place(x=20,y=20)
-daysToZp.place(x=380, y=20)
-enterMoney.place(x=140 ,y=160 )
-rashodDay.place(x=105, y=210)
-inputMoney.place(x=305, y=163)
-btn.place(x=350, y=270)
-vyvod.place(x=305, y=210)
-lbl.place(x=35, y=240)
-"""
-
-
+app.bind_all("<Return>", callback)
 root.mainloop()
 
