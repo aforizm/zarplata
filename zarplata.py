@@ -13,16 +13,19 @@ class Application(Frame):
 	def __init__(self, master):
 		super(Application, self).__init__(master)
 		self.grid()
+		self.bind("<Return>", self.callback) #счет происходит при нажатии на клавишу Enter
 		self.AddWidgets()
+		self.ddd = 2
 
 	def AddWidgets(self):
+
 		#label date
 		d = date.today()
 		d = d.strftime('%A %d %B %Y')
 		todayTxt = "Сегодня: " + d
 		Label(self,
 			  text = todayTxt,
-			  font = 'Bookman Old Style 14'
+			  font = 'Arial 14'
 			  ).grid(row = 0, column = 0, columnspan = 2, sticky = W)
 
 		#label дней до з/п
@@ -37,34 +40,39 @@ class Application(Frame):
 		#определяем кол-во дней до з/п
 		kolvo = dateZp - today
 		if kolvo.days < 0:
-		    ddd = kolvo.days+30
+		    self.ddd = kolvo.days+30
 		else:
-		    ddd = kolvo.days		    
+		    self.ddd = kolvo.days		    
 		#надпись
 		dneydozp = 'Дней до з/п: '
-		dneydozp = dneydozp + str(ddd)
+		dneydozp = dneydozp + str(self.ddd)
 		Label(self, 
 			  text = dneydozp, 
-			  font = 'Bookman Old Style 14'
+			  font = 'Arial 14'
 			  ).grid(row = 0, column = 2, sticky = W)
 
 		#label enter money and input
 		Label(self,
 			  text = 'Введите сумму денег: ',
-			  font = 'Bookman Old Style 12'
+			  font = 'Arial 12'
 			  ).grid(row = 2, column = 0, columnspan = 2, sticky = W)
 		self.money_ent = Entry(self, width = 8, bd = 4 )
-		self.money_ent.grid(row = 2, column = 1, sticky = W)
+		self.money_ent.focus()
+		self.money_ent.grid(row = 2, column = 2, sticky = W)
 
 		#label расход в день
 		Label(self,
 			  text = 'Расход в день: ',
-			  font = 'Bookman Old Style 12'
+			  font = 'Arial 12'
 			  ).grid(row = 3, column = 0, columnspan = 2, sticky = W)
-		self.rashod_lbl = Label (self,
-			  text = ' ',
-			  font = 'Bookman Old Style 12'
+		
+		self.v = StringVar()
+		self.v.set(" ")
+		self.rashod_lbl = Label(self,
+		      textvariable=self.v,		  
+			  font = 'Arial 12'
 			  ).grid(row = 3, column = 1,  sticky = W)
+		
 
 		#Button send data
 		Button(self,
@@ -72,7 +80,7 @@ class Application(Frame):
 			command = self.btn_clicked,
 			bg = '#293D72', 
 			fg = 'white', 
-			font = 'Bookman Old Style 30',
+			font = 'Arial 30',
 			).grid(row = 4, column = 1,  sticky = W)
 
 		#picture label
@@ -83,19 +91,34 @@ class Application(Frame):
 			image = phot
 			).grid(row = 5, column = 0,  sticky = W)
 
+	def btn_clicked(self):
+		entered = self.money_ent.get()
+		#проверка, введено ли целое число или текст
+		if entered.isdigit():
+			rashVDen = int(entered) / int(self.ddd)
+			self.v.set(int(rashVDen))
+			self.rashod_lbl['bg'] = '#F0F0F0'
+		else:
+			self.rashod_lbl['text'] = 'не корректно введена сумма'
+			self.rashod_lbl['bg'] = 'red'
+
+	def callback(event):
+		self.btn_clicked()
+
 
 
 
 
 root = Tk()
+root.title('Зарплата ver 0.9.2/110517')
+root.resizable(0,0)
+app = Application(root)
 
 
 
 
-def callback(event):
-    btn_clicked()
 
-def btn_clicked():
+"""def  btn_clicked():
     entered = inputMoney.get()
     
 
@@ -106,13 +129,13 @@ def btn_clicked():
     else:
         vyvod['text'] = 'не корректно введена сумма'
         vyvod['bg'] = 'red'   
-
+"""
 
 #начальные установки окна
 #root['width'] = WIDTH
 #root['height']= HEIGHT
-root.title('Зарплата ver 0.9.2/110517')
-root.resizable(0,0)
+
+
 
 
 #дней до з/п
@@ -123,11 +146,11 @@ root.resizable(0,0)
 #rashodDay = Label(root, text = 'Примерный расход в день:', font = 'arial 12')
 
 #ввод денег и вывод на экран
-inputMoney = Entry(root, width = 8, bd = 4)
-inputMoney.focus()
-btn = Button(root, text = 'Рассчитать', bg = '#293D72', fg = 'white', font = 'arial 30',
-             command= btn_clicked)
-vyvod = Label(root, font = 'arial 12')
+#inputMoney = Entry(root, width = 8, bd = 4)
+#inputMoney.focus()
+#btn = Button(root, text = 'Рассчитать', bg = '#293D72', fg = 'white', font = 'arial 30',
+#             command= btn_clicked)
+#vyvod = Label(root, font = 'arial 12')
 
 
 #отображение фото
@@ -144,7 +167,7 @@ btn.place(x=350, y=270)
 vyvod.place(x=305, y=210)
 lbl.place(x=35, y=240)
 """
-root.bind("<Return>", callback) #счет происходит при нажатии на клавишу Enter
+
 
 root.mainloop()
 
