@@ -29,10 +29,10 @@ class Application(Frame):
 			  ).grid(row = 0, column = 0, columnspan = 2, sticky = W)
 
 		#label  space
-		Label(self,
+		"""Label(self,
 			  text = ' ',
 			  
-			  ).grid(row =1, column = 0, columnspan = 2, sticky = W)
+			  ).grid(row =1, column = 0, columnspan = 2, sticky = W)"""
 
 		#label дней до з/п
 		today = date.today()
@@ -101,6 +101,22 @@ class Application(Frame):
 			)
 		self.phot_lbl.photo = phot
 		self.phot_lbl.grid(row = 4, column = 0,  sticky = W)
+
+		#listbox scrollbar вставка возможность выбора числа з/п
+		self.num_scrb = Scrollbar(self)
+		self.num_scrb.grid(row = 1, column = 1, sticky = W)
+
+		self.num_lb = Listbox(self, 
+			yscrollcommand = self.num_scrb.set, 
+			font=("Bookman Old Style", 10),
+			height = 2, 
+			width = 4)
+		for i in range(1,32):
+			self.num_lb.insert(i, i)
+		self.num_lb.grid(row = 1, column = 0, sticky = E)
+		self.num_scrb.config(command = self.num_lb.yview)
+
+
 
 	def btn_clicked(self):
 		entered = self.money_ent.get()
