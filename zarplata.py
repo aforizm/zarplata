@@ -114,7 +114,17 @@ class Application(Frame):
 		for i in range(1,32):
 			self.num_lb.insert(i, i)
 		self.num_lb.grid(row = 1, column = 0, sticky = E)
+		self.num_lb.see(20)
 		self.num_scrb.config(command = self.num_lb.yview)
+
+		#Button change date z/p
+		Button(self,
+			text = "Изменить дату",
+			command = self.changeDate,
+			#bg = '#293D72', 
+			#fg = 'white', 
+			font=("Bookman Old Style", 10),
+			).grid(row = 1, column = 2,  sticky = W)
 
 
 
@@ -128,6 +138,10 @@ class Application(Frame):
 		else:
 			self.rashod_lbl_str.set('не корректно введена сумма')
 			self.rashod_lbl['bg'] = "red"
+
+	def changeDate(self):
+
+		pass
 
 	
 
