@@ -10,15 +10,19 @@ from datetime import *
 
 class Application(Frame):
 	"""docstring for Application"""
+	chisloZp = 20
+	
 	def __init__(self, master):
 		super(Application, self).__init__(master)
 		self.grid()
 		#self.bind("<Return>", self.callback) #счет происходит при нажатии на клавишу Enter
 		self.AddWidgets()
+		self.chisloZp = 20
 		
-
+		
+	
 	def AddWidgets(self):
-
+		
 		#label date
 		d = date.today()
 		d = d.strftime('%A %d %B %Y')
@@ -36,13 +40,14 @@ class Application(Frame):
 
 		#label дней до з/п
 		today = date.today()
+
 		#определяем в каком месяце будет з/п
 		if today.day < 20:
-		    dateZp = date(today.year, today.month, 20)
+		    dateZp = date(today.year, today.month, self.chisloZp)
 		elif today.month+1 == 13:
-		    dateZp = date(today.year+1, 1, 20)
+		    dateZp = date(today.year+1, 1, self.chisloZp)
 		else:
-		    dateZp = date(today.year, today.month+1, 20)
+		    dateZp = date(today.year, today.month+1, self.chisloZp)
 		#определяем кол-во дней до з/п
 		kolvo = dateZp - today
 		if kolvo.days < 0:
@@ -112,11 +117,12 @@ class Application(Frame):
 			height = 2, 
 			width = 4)
 		for i in range(1,32):
-			self.num_lb.insert(i, i)
+			self.num_lb.insert(i, i-1)
 		self.num_lb.grid(row = 1, column = 0, sticky = E)
-		self.num_lb.see(20)
+		self.num_lb.see(20)		
 		self.num_scrb.config(command = self.num_lb.yview)
-
+		self.num_lb.activate(20)
+		#self.selected = (int(str(self.num_lb.curselection()).strip('(),')))
 		#Button change date z/p
 		Button(self,
 			text = "Изменить дату",
@@ -138,11 +144,12 @@ class Application(Frame):
 		else:
 			self.rashod_lbl_str.set('не корректно введена сумма')
 			self.rashod_lbl['bg'] = "red"
-
+	@property
 	def changeDate(self):
-
+		'''self.selected = (int(str(self.num_lb.curselection()).strip('(),')))
+		return self.selected'''
 		pass
-
+		
 	
 
 
@@ -157,3 +164,4 @@ app = Application(root)
 app.bind_all("<Return>", callback)
 root.mainloop()
 
+calendar.mdays[d.month+1]
