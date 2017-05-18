@@ -9,22 +9,16 @@ from tkinter import *
 from datetime import *
 
 class Application(Frame):
-	"""docstring for Application"""
-	chisloZp = 20
-	
+	"""docstring for Application"""		
 	def __init__(self, master):
 		super(Application, self).__init__(master)
 		self.grid()
 		self.AddWidgets()
-		self.when()
-		
+		self.when()		
 		
 	def when(self, chislo = 20):
 		#определяем в каком месяце будет з/п
 		self.chisloZp = chislo
-
-		print('in when() ', self.chisloZp)
-
 		today = date.today()
 		if today.day < 20:
 			dateZp = date(today.year, today.month, self.chisloZp)
@@ -32,7 +26,6 @@ class Application(Frame):
 			dateZp = date(today.year+1, 1, self.chisloZp)
 		else:
 			dateZp = date(today.year, today.month+1, self.chisloZp)
-
 		
 		#определяем кол-во дней до з/п
 		kolvo = dateZp - today
@@ -47,8 +40,7 @@ class Application(Frame):
 			self.txtVarStr.set(qwer)
 			return self.ddd
 	
-	def AddWidgets(self):
-		
+	def AddWidgets(self):		
 		#label date
 		d = date.today()
 		d = d.strftime('%A %d %B %Y')
@@ -57,7 +49,6 @@ class Application(Frame):
 			  text = todayTxt,
 			  font=("Bookman Old Style", 16)
 			  ).grid(row = 0, column = 0, columnspan = 2, sticky = W)
-
 
 		#label дней до з/п			    
 		#надпись
@@ -71,9 +62,6 @@ class Application(Frame):
 			  font=("Bookman Old Style", 14)
 			  )
 		self.txt.grid(row = 0, column = 2, sticky = W)
-		
-		
-
 
 		#label enter money and input
 		Label(self,
@@ -98,8 +86,7 @@ class Application(Frame):
 			  bg = "white"
 			  )
 		self.rashod_lbl.grid(row = 3, column = 1,  sticky = W)
-		#self.rashod_lbl["bg"] = "red"
-		
+		#self.rashod_lbl["bg"] = "red"		
 
 		#Button send data
 		Button(self,
@@ -122,7 +109,7 @@ class Application(Frame):
 
 		#listbox scrollbar вставка возможность выбора числа з/п
 		self.scrlbar1 = Scrollbar(self)
-		self.scrlbar1.grid(row = 1, column = 1, sticky = W)
+		self.scrlbar1.grid(row = 1, column = 2, sticky = W)
 
 		self.listbox1 = Listbox(self, 
 			yscrollcommand = self.scrlbar1.set, 
@@ -131,20 +118,15 @@ class Application(Frame):
 			width = 4)
 		for i in range(2,33):
 			self.listbox1.insert(i, i-1)
-		self.listbox1.grid(row = 1, column = 0, sticky = E)
+		self.listbox1.grid(row = 1, column = 1, columnspan = 1, sticky = E)
 		self.listbox1.see(20)		
 		self.scrlbar1.config(command = self.listbox1.yview)
-		
-		#self.listbox1.activate(20)
-		#self.selected = (int(str(self.listbox1.curselection()).strip('(),')))
-		#Button change date z/p
-		Button(self,
-			text = "Изменить дату",
-			command = self.changeDate,
-			#bg = '#293D72', 
-			#fg = 'white', 
-			font=("Bookman Old Style", 10),
-			).grid(row = 1, column = 2,  sticky = W)
+
+		#label 
+		Label(self,
+			  text = 'Число месяца зарплата',
+			  font=("Bookman Old Style", 10)
+			  ).grid(row = 1, column = 1,  sticky = W)	
 		
 	def btn_clicked(self):
 		entered = self.money_ent.get()
@@ -155,28 +137,14 @@ class Application(Frame):
 			self.rashod_lbl['bg'] = '#F0F0F0'
 		else:
 			self.rashod_lbl_str.set('не корректно введена сумма')
-			self.rashod_lbl['bg'] = "red"
-
-	@property
-	def changeDate(self):
-		#self.listbox1.activate(20)
-		#self.chisloZp = self.listbox1.get((self.listbox1.curselection()))
-		
-		#print(self.chisloZp)
-		#return self.chisloZp
-		print(self.chisloZp)
-		pass
-		
-	
+			self.rashod_lbl['bg'] = "red"	
 
 
 def callback(event):
 	Application.btn_clicked(app)
 
 def Get(event):
-	print('cursorselection = ', app.listbox1.get((app.listbox1.curselection())))
 	num = app.listbox1.get((app.listbox1.curselection()))
-	print(num)
 	app.when(chislo = num)
 
 
