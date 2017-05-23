@@ -20,7 +20,7 @@ class Application(Frame):
 		#определяем в каком месяце будет з/п
 		self.chisloZp = chislo
 		today = date.today()
-		if today.day < 20:
+		if today.day < self.chisloZp:
 			dateZp = date(today.year, today.month, self.chisloZp)
 		elif today.month+1 == 13:
 			dateZp = date(today.year+1, 1, self.chisloZp)
