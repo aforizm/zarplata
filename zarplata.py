@@ -7,6 +7,7 @@ HEIGHT = 400
 
 from tkinter import *
 from datetime import *
+import calendar
 
 class Application(Frame):
 	"""docstring for Application"""		
@@ -22,6 +23,9 @@ class Application(Frame):
 		today = date.today()
 		if today.day < self.chisloZp:
 			dateZp = date(today.year, today.month, self.chisloZp)
+		elif today.day == self.chisloZp:
+			self.chisloZp = 31 if calendar.mdays[today.month+1] == 31 else 30
+			dateZp = date(today.year, today.month+1, self.chisloZp)
 		elif today.month+1 == 13:
 			dateZp = date(today.year+1, 1, self.chisloZp)
 		else:
